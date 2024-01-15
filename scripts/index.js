@@ -22,7 +22,7 @@ function deleteCard(card) {
 };
 
 // @todo: Вывести карточки на страницу
-function initialCardList(cardElement) {
+function initialCardList() {
     initialCards.forEach(function (item) {
         const newCard = createCard(item)
         cardList.append(newCard);
