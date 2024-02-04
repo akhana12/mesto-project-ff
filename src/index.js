@@ -42,7 +42,7 @@ const popupImageCaption = document.querySelector('.popup__caption');
 
 // Слушатели ПРОФИЛЯ
 //Открытие модального окна Профиля
-profileEditButton.addEventListener('click', function() {
+profileEditButton.addEventListener('click', () => {
     nameInput.value = profileName.textContent;
     descriptionInput.value = profileDescription.textContent;
     openModal(popupProfile)
@@ -66,9 +66,7 @@ profileFormElement.addEventListener('submit', handleProfileFormSubmit);
 
 // Слушатели КАРТОЧКИ
 //Открытие модального окна Карточки
-addCardButton.addEventListener ('click', function () {
-    openModal(popupNewCard)
-})
+addCardButton.addEventListener ('click', () => openModal(popupNewCard));
 
 //Закрытие модального окна Карточки
 popupNewCard.addEventListener('click', (evt) => handleModalClose(evt, popupNewCard));
