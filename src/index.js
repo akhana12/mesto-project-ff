@@ -94,7 +94,7 @@ export function openPopupImage(imageSrc, imageCaption){
     openModal(popupTypeImage);
   }
 
-//Закрытие модального окна с изображением
+//Закрытие попапа с изображением
 popupTypeImage.addEventListener('click', (evt) => handleModalClose(evt, popupTypeImage));
 
 initialCardList();

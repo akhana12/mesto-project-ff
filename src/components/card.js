@@ -38,6 +38,7 @@ export function createCard(item, deleteCallback, likeHendler, openPopupImage) {
   cardElement.querySelector('.card__image').src = item.link;
   cardElement.querySelector('.card__title').textContent = item.name;
   cardElement.querySelector('.card__image').alt = `Фотография локации: ${item.name}`;
+  
   // Кнопка лайка
   const likeButton = cardElement.querySelector('.card__like-button');
   likeButton.addEventListener('click', likeHendler)
