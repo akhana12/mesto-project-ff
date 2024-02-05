@@ -1,13 +1,13 @@
 import './styles/index.css';
+import {initialCards} from './components/cards';
 import {
     createCard,
     deleteCard,
-    initialCardList,
-    likeHendler} from './components/card'
+    likeHandler} from './components/card';
 import {
     openModal,
     closeModal,
-    handleModalClose} from './components/modal'
+    handleModalClose} from './components/modal';
 
 
 // DOM узлы
@@ -24,20 +24,20 @@ const profileDescription = document.querySelector('.profile__description');
 
 // Попап профиля
 const popupProfile = document.querySelector('.popup_type_edit');
-const profileFormElement = document.querySelector('form[name="edit-profile"]');
+const profileFormElement = popupProfile.querySelector('form[name="edit-profile"]');
 const nameInput = profileFormElement.elements.name;
 const descriptionInput = profileFormElement.elements.description;
 
 // Попап карточки
 const popupNewCard = document.querySelector('.popup_type_new-card');
-const newCardFormElement = document.querySelector('form[name="new-place"]');
+const newCardFormElement = popupNewCard.querySelector('form[name="new-place"]');
 const placeNameInput = newCardFormElement.elements.place_name;
 const linkInput = newCardFormElement.elements.link;
 
 // Попап изображения
 const popupTypeImage = document.querySelector('.popup_type_image');
-const popupImage = document.querySelector('.popup__image');
-const popupImageCaption = document.querySelector('.popup__caption');
+const popupImage = popupTypeImage.querySelector('.popup__image');
+const popupImageCaption = popupTypeImage.querySelector('.popup__caption');
 
 
 // Слушатели ПРОФИЛЯ
@@ -45,8 +45,8 @@ const popupImageCaption = document.querySelector('.popup__caption');
 profileEditButton.addEventListener('click', () => {
     nameInput.value = profileName.textContent;
     descriptionInput.value = profileDescription.textContent;
-    openModal(popupProfile)
-})
+    openModal(popupProfile);
+});
 
 //Закрытие модального окна Профиля
 popupProfile.addEventListener('click', (evt) => handleModalClose(evt, popupProfile));
@@ -54,12 +54,12 @@ popupProfile.addEventListener('click', (evt) => handleModalClose(evt, popupProfi
 // Обработчик «отправки» формы профиля
 function handleProfileFormSubmit(evt) {
     evt.preventDefault();
-    let name = nameInput.value
-    let description = descriptionInput.value
-    profileName.textContent = name
-    profileDescription.textContent = description
-    closeModal(popupProfile)
-}
+    const name = nameInput.value;
+    const description = descriptionInput.value;
+    profileName.textContent = name;
+    profileDescription.textContent = description;
+    closeModal(popupProfile);
+};
 
 // Прикрепляем обработчик к форме
 profileFormElement.addEventListener('submit', handleProfileFormSubmit);
@@ -77,22 +77,33 @@ function handleCardFormSubmit(evt) {
     const newCardItem = {};
     newCardItem.name = placeNameInput.value;
     newCardItem.link = linkInput.value;
-    cardList.prepend(createCard(newCardItem, deleteCard, likeHendler, openPopupImage));
-    closeModal(popupNewCard)
-    newCardFormElement.reset()
-}
+    cardList.prepend(createCard(newCardItem, deleteCard, likeHandler, openPopupImage));
+    closeModal(popupNewCard);
+    newCardFormElement.reset();
+};
 
 // Прикрепляем обработчик к форме
 newCardFormElement.addEventListener('submit', handleCardFormSubmit);
 
 // Открытие попапа с изображением
-export function openPopupImage(imageSrc, imageCaption){
+function openPopupImage(imageSrc, imageCaption){
     popupImage.src = imageSrc;
+    popupImage.alt = `Фотография локации: ${imageCaption}`;
     popupImageCaption.textContent = imageCaption;
+
     openModal(popupTypeImage);
-  }
+};
 
 //Закрытие попапа с изображением
 popupTypeImage.addEventListener('click', (evt) => handleModalClose(evt, popupTypeImage));
 
-initialCardList();
+
+// Вывести карточки на страницу
+function renderInitialCards() {
+    initialCards.forEach(function (item) {
+        const newCard = createCard(item, deleteCard, likeHandler, openPopupImage);
+        cardList.append(newCard);
+    });
+};
+
+renderInitialCards();
