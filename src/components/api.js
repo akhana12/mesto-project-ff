@@ -1,19 +1,17 @@
+// Проверка ответа на запрос
+function getResponseData(res) {
+  if (!res.ok) {
+    return Promise.reject(`Ошибка: ${res.status}`);
+  }
+  return res.json();
+}
+
 //Получение информации о пользователе
 export function getUserInfo(apiConfig) {
   return fetch(apiConfig.baseUrl + '/users/me', {
     method: 'GET',
     headers: apiConfig.headers
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        return Promise.reject(res);
-      }
-    })
-    .catch((err) => {
-      console.log('Запрос не выполнен, ошибка: ', err);
-    });
+  }).then(getResponseData);
 }
 
 //Получение информации о карточках
@@ -21,17 +19,7 @@ export function getCards(apiConfig) {
   return fetch(apiConfig.baseUrl + '/cards ', {
     method: 'GET',
     headers: apiConfig.headers
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        return Promise.reject(res);
-      }
-    })
-    .catch((err) => {
-      console.log('Запрос не выполнен, ошибка: ', err);
-    });
+  }).then(getResponseData);
 }
 
 //Обновление информации о пользователе
@@ -43,17 +31,7 @@ export function updateUserInfo(apiConfig, newUserName, newUserDescruption) {
       name: newUserName,
       about: newUserDescruption
     })
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        return Promise.reject(res);
-      }
-    })
-    .catch((err) => {
-      console.log('Запрос не выполнен, ошибка: ', err);
-    });
+  }).then(getResponseData);
 }
 
 // Добавление новой карточки
@@ -65,17 +43,7 @@ export function addCard(apiConfig, newCardItem) {
       name: newCardItem.name,
       link: newCardItem.link
     })
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        return Promise.reject(res);
-      }
-    })
-    .catch((err) => {
-      console.log('Запрос не выполнен, ошибка: ', err);
-    });
+  }).then(getResponseData);
 }
 
 // Удаление карточки
@@ -83,17 +51,7 @@ export function deleteCard(apiConfig, cardId) {
   return fetch(apiConfig.baseUrl + '/cards/' + cardId, {
     method: 'DELETE',
     headers: apiConfig.headers
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        return Promise.reject(res);
-      }
-    })
-    .catch((err) => {
-      console.log('Запрос не выполнен, ошибка: ', err);
-    });
+  }).then(getResponseData);
 }
 
 // Постановка лайка
@@ -101,17 +59,7 @@ export function likeCard(apiConfig, cardId) {
   return fetch(apiConfig.baseUrl + '/cards/likes/' + cardId, {
     method: 'PUT',
     headers: apiConfig.headers
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        return Promise.reject(res);
-      }
-    })
-    .catch((err) => {
-      console.log('Запрос не выполнен, ошибка: ', err);
-    });
+  }).then(getResponseData);
 }
 
 // Удаление лайка
@@ -119,17 +67,7 @@ export function unlikeCard(apiConfig, cardId) {
   return fetch(apiConfig.baseUrl + '/cards/likes/' + cardId, {
     method: 'DELETE',
     headers: apiConfig.headers
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        return Promise.reject(res);
-      }
-    })
-    .catch((err) => {
-      console.log('Запрос не выполнен, ошибка: ', err);
-    });
+  }).then(getResponseData);
 }
 
 // Обновление аватара пользователя
@@ -140,15 +78,5 @@ export function updateAvatar(apiConfig, newAvatarLink) {
     body: JSON.stringify({
       avatar: newAvatarLink
     })
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        return Promise.reject(res);
-      }
-    })
-    .catch((err) => {
-      console.log('Запрос не выполнен, ошибка: ', err);
-    });
+  }).then(getResponseData);
 }

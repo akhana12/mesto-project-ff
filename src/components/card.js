@@ -1,5 +1,9 @@
-import { cardTemplate, apiConfig } from './constants';
+// Темплейт карточки
+import { apiConfig } from './constants';
+
 import { likeCard, unlikeCard } from './api';
+
+const cardTemplate = document.querySelector('#card-template').content;
 
 // Функция создания карточки
 export function createCard(
@@ -46,14 +50,6 @@ export function createCard(
   cardDeleteButton.addEventListener('click', () => removeCard(cardElement));
 
   return cardElement;
-}
-
-// Функция удаления карточки из списка
-export function removeCardFromCardList(cardId) {
-  const card = document.querySelector(
-    `.places__item[data-card_id="${cardId}"]`
-  );
-  card.remove();
 }
 
 // Обработчик лайка
