@@ -1,8 +1,9 @@
-// Темплейт карточки
 import { apiConfig } from './constants';
 
-import { likeCard, unlikeCard } from './api';
+import { openModal } from './modal';
 
+import { likeCard, unlikeCard } from './api';
+// Темплейт карточки
 const cardTemplate = document.querySelector('#card-template').content;
 
 // Функция создания карточки
@@ -20,20 +21,19 @@ export function createCard(
   const cardLikeCounter = cardElement.querySelector('.card__like-counter');
   const likeButton = cardElement.querySelector('.card__like-button');
   const cardDeleteButton = cardElement.querySelector('.card__delete-button');
+  const { link, name, likes, owner, _id } = item;
 
   // Вешаем идентификатор карточки для удаления
-  cardElement.dataset.card_id = item._id;
+  cardElement.dataset.card_id = _id;
 
   // Картинка
-  cardImage.src = item.link;
-  cardTitle.textContent = item.name;
+  cardImage.src = link;
+  cardTitle.textContent = name;
   cardImage.setAttribute('alt', `Фотография локации: ${item.name}`);
-  cardImage.addEventListener('click', () =>
-    openPopupImage(item.link, item.name)
-  );
+  cardImage.addEventListener('click', () => openPopupImage(link, name));
 
   //Счетчик лайков карточки
-  cardLikeCounter.textContent = item.likes.length || '';
+  cardLikeCounter.textContent = likes.length || '';
 
   // Кнопка лайка
   likeButton.classList.toggle(
@@ -46,7 +46,7 @@ export function createCard(
 
   // Кнопка удаления
   // Если id владельца не совпадает с id пользователя, то скрываем кнопку удаления
-  cardDeleteButton.style.display = item.owner._id !== userId ? 'none' : '';
+  cardDeleteButton.style.display = owner._id !== userId ? 'none' : '';
   cardDeleteButton.addEventListener('click', () => removeCard(cardElement));
 
   return cardElement;
@@ -88,4 +88,11 @@ export function likeHandler(item, userId, likeButton, cardLikeCounter) {
 
 function checkUserLike(item, userId) {
   return item.likes.some((like) => like._id === userId);
+}
+
+// Функция удаления карточки
+export function removeCard(item) {
+  const popupDeleteCard = document.querySelector('.popup_type_delete-card');
+  popupDeleteCard.dataset.card_id = item.dataset.card_id;
+  openModal(popupDeleteCard);
 }

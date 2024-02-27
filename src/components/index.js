@@ -1,5 +1,5 @@
 import '../styles/index.css';
-import { createCard, likeHandler } from './card';
+import { createCard, likeHandler, removeCard } from './card';
 import { openModal, closeModal, handleModalClose } from './modal';
 
 import { enableValidation, clearValidation } from './validation';
@@ -182,12 +182,6 @@ function openPopupImage(imageSrc, imageCaption) {
 popupTypeImage.addEventListener('click', (evt) =>
   handleModalClose(evt, popupTypeImage)
 );
-
-//Открытие модального удаления карточки
-function removeCard(item) {
-  popupDeleteCard.dataset.card_id = item.dataset.card_id;
-  openModal(popupDeleteCard);
-}
 
 //Закрытие модального окна удаления карточки
 popupDeleteCard.addEventListener('click', (evt) =>
